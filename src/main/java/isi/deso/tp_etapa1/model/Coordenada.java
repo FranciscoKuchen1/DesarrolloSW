@@ -4,11 +4,6 @@
  */
 package isi.deso.tp_etapa1.model;
 
-/**
- *
- * @author jarteaga
- */
-
 public class Coordenada {
     private double lat;
     private double lgn;
