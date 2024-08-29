@@ -9,75 +9,162 @@ import java.util.List;
 import isi.deso.tp_etapa1.model.Cliente;
 import isi.deso.tp_etapa1.model.Coordenada;
 import isi.deso.tp_etapa1.model.Vendedor;
-import isi.deso.tp_etapa1.service.GestorCliente;
-import isi.deso.tp_etapa1.service.GestorVendedor;
-
-
-/**
- *
- * @author jarteaga
- * 
- */
 
 
 public class Main {
+
     public static void main(String[] args) {
-        GestorVendedor gestorVendedor= new GestorVendedor();
-        GestorCliente gestorCliente= new GestorCliente();
+	//CORRECTO?
+	// Crear un método main que cree 3 instancias de vendedores y agregarlos a un arreglo.
+        List<Vendedor> listVendedores=crearVendedores(),filtro;
 
-        //creando los vendedores
-        Vendedor v1=gestorVendedor.crearVendedor(1,"roticeria Pampita","San luis 34",new Coordenada(1, 2));
-        Vendedor v2=gestorVendedor.crearVendedor(2,"Polleria don pechuga","Paraguay 444",new Coordenada(2, 3));
-        Vendedor v3=gestorVendedor.crearVendedor(3,"Polleria alitas","Vicente 23",new Coordenada(3, 6));
+	// Crear un método main que cree 3 instancias de Clientes y agregarlos a un arreglo.
+        List<Cliente> listClientes=crearClientes();
+	
+	// Agregar a vendedor un método “distancia” que reciba un Cliente como argumento y calcule la
+	// distancia en kilómetros entre ellos (usar una implementación de la fórmula de Haversine).
+        double distanciaVendedorCliente=listVendedores.get(1).distancia(listClientes.get(1));
 
-        List<Vendedor> listaVendedores= new ArrayList<Vendedor>();
+        System.out.print(distanciaVendedorCliente);
 
-        listaVendedores.add(v1);
-        listaVendedores.add(v2);
-        listaVendedores.add(v3);
+	// Iterar sobre el arreglo para buscar vendedores por nombre o por id.
+        filtroVendedores=filterVendedoresPorId(listVendedores,1);
+
+        for(Vendedor f : filtroVendedores){
+            System.out.print(" " + f.getNombre() + " ");
+        }
+	
+	// Iterar sobre el arreglo para buscar Clientes por nombre o por id.
+	filtroClientes=filterClientesPorId(listClientes,1);
+
+        for(Cliente c : filtroClientes){
+            System.out.print(" " + f.getNombre() + " ");
+        }
         
-        System.out.print("");
-        System.out.print("Vendedores filtrados\n");
+	// Eliminar un vendedor del arreglo.
+        deleteVendedoresPorId(listVendedores,1);
 
-        List<Vendedor> listaVendedoresFiltradoID=gestorVendedor.filterVendedoresId(listaVendedores, 1);
+        deleteVendedoresPorNombre(listVendedores,"Jose");
 
-        listaVendedoresFiltradoID.forEach(vendedor -> System.out.println(vendedor));
-        
-        List<Vendedor> listaVendedoresFiltradoNombre=gestorVendedor.filterVendedoresNombre(listaVendedores, "Polleria don pechuga");
+        for(Vendedor ven : listVendedores){
+            System.out.print(" " + ven.getNombre() + " ");
+        }
 
-        listaVendedoresFiltradoNombre.forEach(vendedor -> System.out.println(vendedor));
+	// Eliminar un cliente del arreglo.
+        deleteClientePorId(listClientes,1);
 
-        System.out.print("Vendedores eliminados\n");
+	deleteClientePorPosicion(listClientes,2);
 
-        gestorVendedor.deleteVendedoresId(listaVendedores,1);
-        gestorVendedor.deleteVendedoresNombre(listaVendedores, "Polleria don pechuga\"");
-
-        listaVendedores.forEach(vendedor -> System.out.println(vendedor));
-
-        //creando los clientes
-        Cliente c1=gestorCliente.crearClientes(1,"lucca","2043350012","lsch@gmail.com","san luis 34",new Coordenada(1, 1));
-        Cliente c2=gestorCliente.crearClientes(2,"pedro","2042250012","pedrito@gmail.com","salta 322",new Coordenada(2, 3));
-        Cliente c3=gestorCliente.crearClientes(2,"patricio","2042255512","p@gmail.com","Peron 2",new Coordenada(4, 4));
-        
-        List<Cliente> listaClientes= new ArrayList<Cliente>();
-        
-        listaClientes.add(c1);
-        listaClientes.add(c2);
-        listaClientes.add(c3);
-
-        System.out.print("Clientes filtrados\n");
-
-        List<Cliente> listaClienteFiltradoID=gestorCliente.filterClienteId(listaClientes, 1);
-        listaClienteFiltradoID.forEach(vendedor -> System.out.println(vendedor));
-
-        List<Cliente> listaClienteFiltradoNombre=gestorCliente.filterClienteNombre(listaClientes,"pedro");
-        listaClienteFiltradoNombre.forEach(vendedor -> System.out.println(vendedor));
-
-        System.out.print("Clientes eliminados\n");
-
-        gestorCliente.deleteClienteId(listaClientes, 1);
-        gestorCliente.deleteClienteNombre(listaClientes, "pedro");
-
-        listaClientes.forEach(vendedor -> System.out.println(vendedor));
+	for(Cliente clie : listClientes){
+            System.out.print(" " + clie.getNombre() + " ");
+        }
     }
+
+
+
+    // Metodos que deberian ser definido dentro de un GestorVendedores
+
+    public static List<Vendedor> crearVendedores(){
+ 
+        Vendedor ven1 = new Vendedor(1,"Pepe", "San Luis 2200", new Coordenada(10,20));
+        Vendedor ven2 = new Vendedor(2,"Juan", "San Justo 3200", new Coordenada(80,20));
+        Vendedor ven3 = new Vendedor(3,"Luis", "Necochea 2200", new Coordenada(400,20));
+ 
+        //Vendedor[] vendedores = {ven1,ven2,ven3};
+        //create a list of Vendedores
+        List<Vendedor> listVendedores = new ArrayList<>();
+        listVendedores.add(ven1);
+        listVendedores.add(ven2);
+        listVendedores.add(ven3);
+ 
+        return listVendedores;
+    }
+
+    //Filtro de vendedores
+    
+    //filtro por ID
+    public static List<Vendedor> filterVendedoresPorId(List<Vendedor> vendedores, int filtroId){
+        List<Vendedor> vendedoresAux = new ArrayList<>();
+
+        for(Vendedor i: vendedores){
+            if(i.getId()==filtroId){
+                vendedoresAux.add(i);
+            }
+        }
+        return vendedoresAux;
+    }
+
+    //filtro por Nombre
+    public static List<Vendedor> filterVendedoresPorNombre(List<Vendedor> vendedores, String filtroId){
+        List<Vendedor> vendedoresAux = new ArrayList<>();
+
+        for(Vendedor i: vendedores){
+            if(i.getNombre().equals(filtroId)){
+                vendedoresAux.add(i);
+            }
+        }
+        return vendedoresAux;
+    }
+
+    //Eliminacion de vendedores por parametro
+
+    //Eliminacion de vendedores por ID
+    public static void deleteVendedoresPorId(List<Vendedor> vendedores, int filtroId){
+        vendedores.removeIf(vendedor -> vendedor.getId()==filtroId);
+    }
+    //Eliminacion de vendedores por Nombre
+    public static void deleteVendedoresPorNombre(List<Vendedor> vendedores, String filtroString){
+        vendedores.removeIf(vendedor -> vendedor.getNombre().equals(filtroString));
+    }
+    //Eliminacion de vendedores pasando la posicion del arreglo de vendedores que se quiere eliminar
+    public static void deleteVendedoresPorPosicion(List<Vendedor> vendedores, int posicion){
+        vendedores.remove(posicion);
+    }
+
+    //Metodos que deberian ser definido dentro de un GestorClientes
+
+    public static List<Cliente> crearClientes(){
+ 
+        //(int id, int cuit, String email, String direccion, Coordenada coordenada)
+
+        Cliente c1 = new Cliente(1,"22433500130","lucca.s@gmail.com", "San Luis 2200", new Coordenada(109,20)); 
+        Cliente c2 = new Cliente(2,"22343200340","juanatorres@gmail.com","Paraguay 29", new Coordenada(8,203));
+        Cliente c3 = new Cliente(3,"20433590390", "pedritoPaso@hotmail.com","San martin 23", new Coordenada(40,2));
+ 
+        List<Cliente> listClientes = new ArrayList<>();
+        listClientes.add(c1);
+        listClientes.add(c2);
+        listClientes.add(c3);
+ 
+        return listClientes;
+    }
+
+    //Filtro de clientes
+
+    //filtro por ID
+    public static List<Cliente> filterClientePorId(List<Cliente> clientes, int filtroId){
+        List<Cliente> clientesAux = new ArrayList<>();
+
+        for(Cliente i: clientes){
+            if(i.getId()==filtroId){
+                clientesAux.add(i);
+            }
+        }
+        return clientesAux;
+    }
+
+    //filtro por nombre???? el cliente no tiene campo nombre
+
+    //Eliminacion de vendedores por ID
+    public static void deleteClientePorId(List<Cliente> clientes, int filtroId){
+        clientes.removeIf(cliente -> cliente.getId()==filtroId);
+    }
+
+    //Eliminacion de vendedores por Nombre??????? no esta definido nombre en cliente
+
+    //Eliminacion de vendedores pasando la posicion del arreglo de vendedores que se quiere eliminar
+    public static void deleteClientePorPosicion(List<Cliente> clientes, int posicion){
+        clientes.remove(posicion);
+    }
+
 }
