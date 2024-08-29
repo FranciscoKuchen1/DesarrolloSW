@@ -10,12 +10,6 @@ import isi.deso.tp_etapa1.model.Cliente;
 import isi.deso.tp_etapa1.model.Coordenada;
 import isi.deso.tp_etapa1.model.Vendedor;
 
-/**
- *
- * @author jarteaga
- * 
- */
-
 
 public class Main {
 
